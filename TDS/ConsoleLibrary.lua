@@ -47,7 +47,7 @@ getgenv().AppendFile = AppendFile or function(check,name,location,str)
 end
 
 local Window = ConsoleUI.new({
-    text = "Strategies X",
+    text = "Constance Hub",
     size = Vector2.new(700, 420),
     shadow = 1,
     rounding = 1,
