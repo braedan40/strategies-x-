@@ -2,10 +2,12 @@ local Workspace = game:GetService("Workspace")
 local Players = game:GetService("Players")
 local LocalPlayer = Players.LocalPlayer
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
+local PathfindingService = game:GetService("PathfindingService")
+
 local RemoteFunction = if not GameSpoof then ReplicatedStorage:WaitForChild("RemoteFunction") else SpoofEvent
 local RemoteEvent = if not GameSpoof then ReplicatedStorage:WaitForChild("RemoteEvent") else SpoofEvent
-local TowerProps = {}
 
+local TowerProps = {}
 local PreviewHolder = ReplicatedStorage.PreviewHolder
 local AssetsHologram = PreviewHolder.AssetsHologram
 local AssetsError = PreviewHolder.AssetsError
@@ -20,8 +22,7 @@ function StackPosition(Position,SkipCheck)
     local Position = if typeof(Position) == "Vector3" then Position else Vector3.new(0,0,0)
     local PositionY = Position.Y
     for i,v in ipairs(TowersContained) do
-        --if v.Position and v.Placed and (math.floor(v.Position.X) == math.floor(Position.X) and math.floor(v.Position.Z) == math.floor(Position.Z)) and (v.Position - Position).magnitude < 5 then (math.abs(v.Position.X - Position.X) < 1 and math.abs(v.Position.Z - Position.Z) < 1)
-        if not (v.Position) then -- and v.Placed
+        if not (v.Position) then
             continue
         end
         if (v.Position * Vector3.new(1,0,1) - Position * Vector3.new(1,0,1)).magnitude < 1 and (v.Position - Position).magnitude < 5 then
@@ -31,7 +32,7 @@ function StackPosition(Position,SkipCheck)
     return Vector3.new(0,Position.Y - PositionY,0)
 end
 
-function DebugTower(Object, Color) --Rework in Future
+function DebugTower(Object, Color)
     repeat task.wait() until tonumber(Object.Name) and Object:FindFirstChild("HumanoidRootPart")
     local Color = Color or Color3.new(1, 0, 0)
     local HumanoidRootPart = Object:FindFirstChild("HumanoidRootPart")
@@ -44,6 +45,7 @@ function DebugTower(Object, Color) --Rework in Future
     GuiInstance.StudsOffsetWorldSpace = Vector3.new(0, 2, 0)
     GuiInstance.Size = UDim2.new(0, 250, 0, 50)
     GuiInstance.AlwaysOnTop = true
+
     local Text = Instance.new("TextLabel")
     Text.Parent = GuiInstance
     Text.BackgroundTransparency = 1
@@ -118,11 +120,10 @@ function AddFakeTower(Name,Type)
         PreviewInitial()
     end
     local Type = Type or "Normal"
-    --local SkinName = SkinName or TowerProps[Name]
-    local Tower = if Type == "Normal" then AssetsHologram[Name] else AssetsError[Name] --ReplicatedStorage.Assets.Troops[Name].Skins[SkinName]
+    local Tower = if Type == "Normal" then AssetsHologram[Name] else AssetsError[Name]
     if Tower then
         Tower = Tower:Clone()
-        Tower.Parent = PreviewHolder --if Type == "Normal" then PreviewFolder else PreviewErrorFolder
+        Tower.Parent = PreviewHolder
         if Tower:FindFirstChild("AnimationController") then
             task.spawn(function()
                 local Success
@@ -137,21 +138,23 @@ function AddFakeTower(Name,Type)
     end
 end
 
---[[if CheckPlace() then
-    PreviewInitial()
-end]]
-
---[[{
-    ["TowerName"] = "",
-    ["TypeIndex"] = ""
-    ["Position"] = Vector3.new(),
-    ["Rotation"] = CFrame.new(),
-    Timer = {Wave,Min,Sec,InWave},
-
-}]]
+function MovePlayerToPosition(Position)
+    local character = LocalPlayer.Character or LocalPlayer.CharacterAdded:Wait()
+    local humanoid = character:FindFirstChild("Humanoid")
+    if not humanoid or not character.PrimaryPart then
+        return
+    end
+    local path = PathfindingService:CreatePath()
+    path:ComputeAsync(character.PrimaryPart.Position, Position)
+    local waypoints = path:GetWaypoints()
+    for _, waypoint in ipairs(waypoints) do
+        humanoid:MoveTo(waypoint.Position)
+        humanoid.MoveToFinished:Wait()
+    end
+end
 
 return function(self, p1)
-    local tableinfo = p1--ParametersPatch("Place",...)
+    local tableinfo = p1
     local Tower = tableinfo["TowerName"]
     local Position = tableinfo["Position"] or Vector3.new(0,0,0)
     local Rotation = tableinfo["Rotation"] or CFrame.new(0,0,0)
@@ -173,13 +176,14 @@ return function(self, p1)
         ["TopPathUpgrade"] = 0,
         ["BottomPathUpgrade"] = 0
     }
-
     local CurrentCount = StratXLibrary.CurrentCount
     local TowerTable = TowersContained[TempNum]
     repeat task.wait() until StratXLibrary.AllowPlace
 
+    -- Move player to the tower's intended position before placing
+    MovePlayerToPosition(TowerTable.Position)
+
     local TowerModel = AddFakeTower(TowerTable.TowerName)
-    --TowerModel.PrimaryPart.CFrame = CFrame.new(TowerTable.Position) + Vector3.new(0,math.abs(TowerModel.PrimaryPart.HeightOffset.CFrame.Y),0)
     TowerModel:PivotTo(CFrame.new(TowerTable.Position + Vector3.new(0,math.abs(TowerModel.PrimaryPart.HeightOffset.CFrame.Y),0)) * TowerTable.Rotation)
     TowerModel.Name = TempNum
     DebugTower(TowerModel,Color3.fromRGB(255, 130, 0))
@@ -187,7 +191,6 @@ return function(self, p1)
     if UtilitiesTab.flags.TowersPreview then
         TowerModel.Parent = PreviewFolder
     end
-
     task.spawn(function()
         if not TimeWaveWait(Wave, Min, Sec, InWave, tableinfo["Debug"]) then
             return
@@ -223,7 +226,7 @@ return function(self, p1)
                 ["Position"] = TowerTable.Position
             },Tower)
             task.wait()
-        until typeof(PlaceCheck) == "Instance" --return instance
+        until typeof(PlaceCheck) == "Instance"
         PlaceCheck.Name = TempNum
         local TowerInfo = StratXLibrary.TowerInfo[Tower]
         TowerInfo[2] += 1
