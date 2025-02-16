@@ -1040,8 +1040,7 @@ local character = player.Character or player.CharacterAdded:Wait()
 local humanoid = character:WaitForChild("Humanoid")
 
 -- Replace "Object" with the actual name or reference to your target part
-local targetPart = workspace:WaitForChild("Object")
-
+local targetPart = Object
 -- Create a new path object
 local path = PathfindingService:CreatePath()
 
