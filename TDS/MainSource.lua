@@ -613,7 +613,7 @@ if CheckPlace() then
 	end)
 
 	-- // Platform Stand InGame
-	task.spawn(function()
+	--[[task.spawn(function()
 		--repeat task.wait() until Workspace.Map:FindFirstChild("Environment"):FindFirstChild("SpawnLocation")
 		local Part = Instance.new("Part")
 		Part.Size = Vector3.new(10, 2, 10)
@@ -634,7 +634,7 @@ if CheckPlace() then
 		LocalPlayer.Character.Humanoid.PlatformStand = true
 		LocalPlayer.Character.HumanoidRootPart.Anchored = true
 		LocalPlayer.Character.HumanoidRootPart.CFrame = Part.CFrame + Vector3.new(0, 3.5, 0)
-	end)
+	end)]]
 
 	getgenv().OldPickups = LocalPlayer.PlayerGui:WaitForChild("ReactOverridesTopBar"):WaitForChild("Frame"):WaitForChild("items"):WaitForChild("Operation I.C.E"):WaitForChild("text").Text
 
@@ -1002,9 +1002,9 @@ if CheckPlace() then
 		end
 	end)
 
-	UtilitiesTab:Button("Teleport Back To Platform",function()
+	--[[UtilitiesTab:Button("Teleport Back To Platform",function()
 		LocalPlayer.Character:FindFirstChild("HumanoidRootPart").CFrame = StratXLibrary.PlatformPart.CFrame + Vector3.new(0, 3.3, 0)
-	end)
+	end)]]
   	local GameMode = if Workspace:FindFirstChild("IntermissionLobby") then "Survival" else "Hardcore"
   	local Lobby = if GameMode == "Survival" then "IntermissionLobby" else "HardcoreIntermissionLobby"
   	UtilitiesTab:Toggle("Use Timescale", {flag = "UseTimeScale", default = UtilitiesConfig.UseTimeScale}, function(bool)
@@ -1031,8 +1031,49 @@ if CheckPlace() then
 			while true do
 				for Index, Object in next, Pickups:GetChildren() do
 					if getgenv().DefaultCam ~= 1 then
-						game:GetService("TweenService"):Create(LocalPlayer.Character:FindFirstChild("HumanoidRootPart"), TweenInfo.new(0, Enum.EasingStyle.Linear), {CFrame = StratXLibrary.PlatformPart.CFrame +  Vector3.new(0, 3.3, 0)}):Play()
-						task.wait(.1)
+						--game:GetService("TweenService"):Create(LocalPlayer.Character:FindFirstChild("HumanoidRootPart"), TweenInfo.new(0, Enum.EasingStyle.Linear), {CFrame = StratXLibrary.PlatformPart.CFrame +  Vector3.new(0, 3.3, 0)}):Play()
+						local PathfindingService = game:GetService("PathfindingService")
+local Players = game:GetService("Players")
+
+local player = Players.LocalPlayer
+local character = player.Character or player.CharacterAdded:Wait()
+local humanoid = character:WaitForChild("Humanoid")
+
+-- Replace "Object" with the actual name or reference to your target part
+local targetPart = workspace:WaitForChild("Object")
+
+-- Create a new path object
+local path = PathfindingService:CreatePath()
+
+-- Compute a path to the object’s position
+path:ComputeAsync(character.PrimaryPart.Position, targetPart.Position)
+
+if path.Status == Enum.PathStatus.Success then
+    -- Retrieve waypoints from the computed path
+    local waypoints = path:GetWaypoints()
+    
+    -- Walk through each waypoint
+    for _, waypoint in ipairs(waypoints) do
+        -- Make the character jump if the path says so
+        if waypoint.Action == Enum.PathWaypointAction.Jump then
+            humanoid.Jump = true
+        end
+        
+        -- Move to the waypoint. Wait until finishing or timing out.
+        humanoid:MoveTo(waypoint.Position)
+        local reached = humanoid.MoveToFinished:Wait()
+        
+        -- If we failed to reach the waypoint (blocked, etc.), break out.
+        if not reached then
+            warn("Movement to waypoint failed.")
+            break
+        end
+    end
+else
+    warn("Path could not be computed.")
+end
+																											task.wait(.1)
+
 					end
 					if Object:IsA("MeshPart") and table.find(Items.Name, Object.Name) and Object.CFrame.Y < 200 then
 						if not LocalPlayer.Character:FindFirstChild("HumanoidRootPart") then
