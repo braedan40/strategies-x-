@@ -150,6 +150,9 @@ function MovePlayerToPosition(Position)
     for _, waypoint in ipairs(waypoints) do
         humanoid:MoveTo(waypoint.Position)
         humanoid.MoveToFinished:Wait()
+     if waypoint.Action == Enum.PathWaypointAction.Jump then
+        humanoid.Jump = true
+        end
     end
 end
 
