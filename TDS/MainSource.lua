@@ -663,7 +663,7 @@ if CheckPlace() then
 			CurrentCamera.CameraSubject = LocalPlayer.Character.Humanoid
 			CurrentCamera.CameraType = "Follow"
 		elseif UtilitiesConfig.Camera == 2 then
-			--LocalPlayer.Character.Humanoid.PlatformStand = true
+			LocalPlayer.Character.Humanoid.PlatformStand = false
 			LocalPlayer.Character.HumanoidRootPart.Anchored = false
 			LocalPlayer.DevCameraOcclusionMode = "Invisicam"
 			CurrentCamera.CameraType = "Follow"
