@@ -18,8 +18,8 @@ if game.PlaceId ~= 3260590327 then
         end
     end
 
-    local LocalFolder = "StrategiesX/TDS/"
-    CheckFolderExists("StrategiesX")
+    local LocalFolder = "RecorderTest/TDS/"
+    CheckFolderExists("RecorderTest")
     CheckFolderExists(LocalFolder)
     CheckFolderExists(LocalFolder.."UserConfig")
     CheckFolderExists(LocalFolder.."UserLogs")
@@ -208,13 +208,13 @@ if game.PlaceId ~= 3260590327 then
     local FarmsID = {}
 
     local GenerateFunction = {
-        Place = function(Args, Timer, RemoteCheck)
+        ["Pl\208\176ce"] = function(Args, Timer, RemoteCheck)
             if typeof(RemoteCheck) ~= "Instance" then
                 return
             end
-            local TowerName = Args[3]
-            local Position = Args[4].Position
-            local Rotation = Args[4].Rotation
+            local TowerName = Args[4]
+            local Position = Args[3].Position
+            local Rotation = Args[3].Rotation
             local RotateX,RotateY,RotateZ = Rotation:ToEulerAnglesYXZ()
             TowerCount += 1
             RemoteCheck.Name = TowerCount
@@ -385,7 +385,7 @@ if game.PlaceId ~= 3260590327 then
         end
     end
     writestrat("getgenv().StratCreditsAuthor = \"Optional\"")
-    appendstrat("local TDS = loadstring(game:HttpGet(\"https://raw.githubusercontent.com/Sigmanic/Strategies-X/refs/heads/main/TDS/MainSource.lua\", true))()\nTDS:Map(\""..
+    appendstrat("local TDS = loadstring(game:HttpGet(\"https://raw.githubusercontent.com/braedan40/strategies-x-/refs/heads/main/TDS/MainSource.lua\", true))()\nTDS:Map(\""..
     RSMap.Value.."\", true, \""..RSMode.Value.."\")\nTDS:Loadout({\""..
         table.concat(Recorder.Troops, `", "`) .. if #Recorder.Troops.Golden ~= 0 then "\", [\"Golden\"] = {\""..
         table.concat(Recorder.Troops.Golden, `", "`).."\"}})" else "\"})"
