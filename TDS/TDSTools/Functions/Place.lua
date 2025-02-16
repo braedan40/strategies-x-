@@ -180,8 +180,8 @@ return function(self, p1)
     local TowerTable = TowersContained[TempNum]
     repeat task.wait() until StratXLibrary.AllowPlace
 
-    -- Move player to the tower's intended position before placing
-    MovePlayerToPosition(TowerTable.Position)
+   
+    --MovePlayerToPosition(TowerTable.Position)
 
     local TowerModel = AddFakeTower(TowerTable.TowerName)
     TowerModel:PivotTo(CFrame.new(TowerTable.Position + Vector3.new(0,math.abs(TowerModel.PrimaryPart.HeightOffset.CFrame.Y),0)) * TowerTable.Rotation)
@@ -227,6 +227,7 @@ return function(self, p1)
             },Tower)
             task.wait()
         until typeof(PlaceCheck) == "Instance"
+         MovePlayerToPosition(TowerTable.Position)
         PlaceCheck.Name = TempNum
         local TowerInfo = StratXLibrary.TowerInfo[Tower]
         TowerInfo[2] += 1
