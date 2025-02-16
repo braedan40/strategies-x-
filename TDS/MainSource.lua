@@ -475,7 +475,7 @@ function GetTowersInfo()
 end
 
 -- // Main Ui Setup
-StratXLibrary.UI.maintab = UILibrary:CreateWindow("Strategies X")
+StratXLibrary.UI.maintab = UILibrary:CreateWindow("Constance Hub")
 maintab = StratXLibrary.UI.maintab
 local BypassGroup
 local IsPlayerInGroup
