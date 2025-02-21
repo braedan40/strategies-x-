@@ -1,6 +1,6 @@
 <br/>
 <p align="center">
-  <h3 align="center">Strategies X [Alpha]</h3>
+  <h3 align="center">Strategies X [Alpha] recoded by constanceprimeau</h3>
 
   <p align="center">
     A version inspired By MoneyMaker's AutoStrat, that aims to be fully open-sourced and more customizable.
