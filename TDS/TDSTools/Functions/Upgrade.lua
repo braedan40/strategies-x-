@@ -78,7 +78,7 @@ return function(self, p1)
             return
         end
         SetActionInfo("Upgrade")
-        MovePlayerToPosition(TowersContained[Tower].Instance.HumanoidRootPart)
+        MovePlayerToPosition(TowersContained[Tower].Instance.HumanoidRootPart.Position)
         ConsoleInfo("Upgraded Tower Index: "..Tower..", Type: \""..TowerType.."\", (Wave "..Wave..", Min: "..Min..", Sec: "..Sec..", InBetween: "..tostring(InWave)..") UpgradeCheck: "..tostring(UpgradeCheck)..", SkipCheck: "..tostring(SkipCheck))
     end)
 end
