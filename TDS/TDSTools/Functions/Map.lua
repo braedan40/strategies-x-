@@ -38,6 +38,7 @@ local ElevatorSettings = {
     ["Event"] = {Enabled = false},
     ["FrostInvasion"] = {Enabled = false},
     ["Special"] = {Enabled = false},
+    ["Hunt2025"] = {Enabled = false},
 }
 
 return function(self, p1)
