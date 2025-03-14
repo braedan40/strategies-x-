@@ -1,7 +1,6 @@
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 
-return function(self, p1)
-    local tableinfo = p1
+return function(self)
     if not CheckPlace() then
         return
     end
