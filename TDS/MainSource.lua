@@ -894,7 +894,7 @@ if CheckPlace() then
 							elseif SpecialTable.mode == "Hunt2025" then
 							Remote = RemoteFunction:InvokeServer("Multiplayer","v2:start",{
 								["difficulty"] = if getgenv().EventEasyMode then "Easy" else "Hard",
-								["mode"] = "hunt_2025",--SpecialTable.mode,
+								["mode"] = SpecialTable.mode,
 								["count"] = 1,
 							})
 							SafeTeleport(Remote)																	
