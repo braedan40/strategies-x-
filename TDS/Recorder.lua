@@ -335,7 +335,7 @@ if game.PlaceId ~= 3260590327 then
         end,
         ["RE:UserLoadout"] = function(Args, Timer, RemoteCheck)
             SetStatus(`User Loadout Selected`)
-            appendstrat(`TDS:UserLoadout("")`)
+            appendstrat(`TDS:UserLoadout()`)
         end,
     }
 
