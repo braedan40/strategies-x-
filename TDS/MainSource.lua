@@ -165,7 +165,7 @@ local SpecialGameMode = {
     --The Classic Event Maps ^^^^^^ [STILL EXIST IN GAME FILES]
     ["Huevous Hunt"] = {""},
     --The Hunt Event Maps [NO LONGER EXIST IN GAME FILES]
-    ["Huevous Hunt V2"] = {mode = "hunt_2025", difficulty = "Easy"},
+    ["Huevous Hunt V2"] = {mode = "Hunt2025", difficulty = "Easy"},
     -- The Hunt Even Maps [NEW]
 }
 
@@ -890,10 +890,10 @@ if CheckPlace() then
 								["count"] = 1,
 							})
 							SafeTeleport(Remote)
-							elseif SpecialTable.mode == "hunt_2025" then
+							elseif SpecialTable.mode == "Hunt2025" then
 							Remote = RemoteFunction:InvokeServer("Multiplayer","v2:start",{
 								["difficulty"] = if getgenv().EventEasyMode then "Easy" else "Hard",
-								["mode"] = SpecialTable.mode,
+								["mode"] = "hunt_2025",--SpecialTable.mode,
 								["count"] = 1,
 							})
 							SafeTeleport(Remote)																	
