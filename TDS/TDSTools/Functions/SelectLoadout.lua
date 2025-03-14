@@ -7,7 +7,7 @@ return function(self, p1)
         return
     end
     task.spawn(function()
-        ReplicatedStorage.Network.PlayerManager.SelectLoadout:FireServer(GameSetLoadoutName)
+       game:GetService("ReplicatedStorage"):WaitForChild("Network"):WaitForChild("PlayerManager"):WaitForChild("RE:UserLoadout"):FireServer(GameSetLoadoutName)
         ConsoleInfo("Choosen Loadout: "..GameSetLoadoutName)
     end)
 end
