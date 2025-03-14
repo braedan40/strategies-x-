@@ -1226,7 +1226,7 @@ Functions.SellAllFarms = loadstring(game:HttpGet(MainLink.."TDSTools/Functions/S
 Functions.Option = loadstring(game:HttpGet(MainLink.."TDSTools/Functions/Option.lua", true))()
 Functions.LeaveOn = loadstring(game:HttpGet(MainLink.."TDSTools/Functions/LeaveOn.lua", true))()
 Functions.SelectLoadout = loadstring(game:HttpGet(MainLink.."TDSTools/Functions/SelectLoadout.lua", true))()
-Functions.UserLoadout = loadstring(game:HttpGet(MainLink.. "TDSTools/Functions/UserLoadout.lua",true))()
+Functions.UserLoadout = loadstring(game:HttpGet(MainLink.."TDSTools/Functions/UserLoadout.lua", true))()
 Functions.MatchMaking = function()
 	local MapProps, Index, VetoUsedOnce, CheckingForPrivateIntermission
     local RSMap = ReplicatedStorage:WaitForChild("State"):WaitForChild("Map") --map's Name
