@@ -165,7 +165,7 @@ local SpecialGameMode = {
     --The Classic Event Maps ^^^^^^ [STILL EXIST IN GAME FILES]
     ["Huevous Hunt"] = {""},
     --The Hunt Event Maps [NO LONGER EXIST IN GAME FILES]
-    ["Huevous Hunt V2"] = {mode = "hunt_2025", difficulty = "Easy"}
+    ["Huevous Hunt V2"] = {mode = "hunt_2025", difficulty = "Easy"},
     -- The Hunt Even Maps [NEW]
 }
 
