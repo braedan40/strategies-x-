@@ -146,7 +146,7 @@ return function(self, p1)
                 elseif SpecialTable.mode == "Hunt2025" then
                     RemoteFunction:InvokeServer("Multiplayer","v2:start",{
                         ["difficulty"] = if getgenv().EventEasyMode then "Easy" else SpecialTable.difficulty,
-                        ["mode"] = "hunt_2025",--SpecialTable.mode,
+                        ["mode"] = SpecialTable.mode,
                         ["count"] = 1,
                     })
                 elseif SpecialTable.mode == "Event" then
