@@ -134,8 +134,10 @@ local Patcher = {
             ["GameSetLoadout"] = gamesetloadout
         }
     end,
-    ["UserLoadout"] = function()
-        return ""
+    ["UserLoadout"] = function(gamesetloadout)
+        return {
+            ["GameSetLoadout"] = gamesetloadout
+        }
     end,
     --[[[""] = function()
         return
