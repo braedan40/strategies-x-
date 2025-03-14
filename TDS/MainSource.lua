@@ -402,7 +402,8 @@ function SafeTeleport(remote)
 end
 
 function TimeWaveWait(Wave,Min,Sec,InWave,Debug)
-	local GameWave = LocalPlayer.PlayerGui:WaitForChild("ReactGameTopGameDisplay"):WaitForChild("Frame"):WaitForChild("wave"):WaitForChild("container"):WaitForChild("value") -- // Current wave you are on
+	--local GameWave = LocalPlayer.PlayerGui:WaitForChild("ReactGameTopGameDisplay"):WaitForChild("Frame"):WaitForChild("wave"):WaitForChild("container"):WaitForChild("value") -- // Current wave you are on
+	local GameWave = require(game:GetService("ReplicatedStorage").Resources.Universal.GameState)											
     local MatchGui = LocalPlayer.PlayerGui:WaitForChild("ReactGameRewards"):WaitForChild("Frame"):WaitForChild("gameOver") -- // end result
 	local RSTimer = ReplicatedStorage:WaitForChild("State"):WaitForChild("Timer"):WaitForChild("Time") -- // Current game's timer
 	if Debug or tonumber(GameWave.Text) > Wave and not MatchGui.Visible then
@@ -414,7 +415,7 @@ function TimeWaveWait(Wave,Min,Sec,InWave,Debug)
 		if MatchGui.Visible or CurrentCount ~= StratXLibrary.RestartCount then
 			return false
 		end
-	until tonumber(GameWave.Text) == Wave and CheckTimer(InWave) -- // CheckTimer will return true when in wave and false when not in wave
+	until --[[tonumber(GameWave.Text)]] GameWave["Wave"] == Wave and CheckTimer(InWave) -- // CheckTimer will return true when in wave and false when not in wave
 	if RSTimer.Value - TotalSec(Min,Sec) < -1 then
 		return true
 	end
