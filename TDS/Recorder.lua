@@ -328,12 +328,13 @@ if game.PlaceId ~= 3260590327 then
             GetMode = DiffTable[Difficulty] or Difficulty
             SetStatus(`Vote {GetMode}`)
         end,
-        SelectLoadout = function(Args, Timer, RemoteCheck)
+        ["RE:UserLoadout"] = function(Args, Timer, RemoteCheck)
             local LoadoutName = Args[1]
             SetStatus(`Loadout Selected`)
             appendstrat(`TDS:SelectLoadout("{LoadoutName}")`)
         end,
     }
+
 
     local Skipped = false
     VoteGUI:GetPropertyChangedSignal("Position"):Connect(function()
