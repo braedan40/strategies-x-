@@ -6,7 +6,7 @@ return function(self, p1)
         return
     end
     task.spawn(function()
-game:GetService("ReplicatedStorage"):WaitForChild("Network"):WaitForChild("PlayerManager"):WaitForChild("RE:UserLoadout"):FireServer()
+ReplicatedStorage:WaitForChild("Network"):WaitForChild("PlayerManager"):WaitForChild("RE:UserLoadout"):FireServer()
 
         ConsoleInfo("Choosen User Loadout")
     end)
