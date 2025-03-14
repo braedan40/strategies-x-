@@ -135,7 +135,7 @@ local Patcher = {
         }
     end,
     ["UserLoadout"] = function()
-        return
+        return ""
     end,
     --[[[""] = function()
         return
