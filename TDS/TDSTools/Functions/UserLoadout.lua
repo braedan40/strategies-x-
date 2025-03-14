@@ -1,6 +1,8 @@
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 
-return function(self)
+return function(self, p1)
+    local tableinfo = p1
+    local GameSetLoadoutName = tableinfo["GameSetLoadout"]
     if not CheckPlace() then
         return
     end
