@@ -143,6 +143,7 @@ local SpecialMaps = {
 	"Classic Castle",
 	--The Classic Roblox Event Special Maps ^^^^^^
 	"Huevous Hunt",
+	"Huevous Hunt V2",
 	--The Hunt Roblox Event Special Maps ^^^^^^
 }
 
